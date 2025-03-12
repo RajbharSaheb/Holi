@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>होली की शुभकामनाएं | Happy Holi 2024</title>
+    <style>
+        body {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #ffe66d);
+            font-family: 'Arial', 'Noto Sans Devanagari', sans-serif;
+            text-align: center;
+        }
+        .container {
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+        }
+        .holi-card {
+            background: rgba(255,255,255,0.9);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        }
+        textarea {
+            width: 80%;
+            height: 100px;
+            padding: 10px;
+            margin: 10px;
+            border: 2px dashed #ff6b6b;
+        }
+        .share-btns {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px;
+        }
+        button {
+            background: #4ecdc4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .message-box {
+            background: white;
+            padding: 15px;
+            margin: 15px;
+            border-left: 5px solid #ff6b6b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 होली की हार्दिक शुभकामनाएं! 🌈</h1>
+        
+        <div class="holi-card">
+            <h2>अपनी होली विशेस टेक्स्ट जोड़ें</h2>
+            <textarea id="wishText" placeholder="यहाँ अपनी होली की शुभकामनाएं लिखें..."></textarea>
+            <button onclick="addWish()">जोड़ें</button>
+        </div>
+
+        <div class="holi-card">
+            <h2>तैयार विशेस संदेश</h2>
+            <div id="wishContainer">
+                <!-- Messages will be added here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Pre-made Holi wishes in Hindi
+        const holiWishes = [
+            "रंगों का त्योहार, मिठाइयों की बहार, गुब्बारों की रिमझिम, आपके जीवन में लाए अनुपम खुशियों की शुभकामनाएं! होली मुबारक!",
+            "फागुन के इस मौसम में, रंगों से भर जाए आपका जीवन, होली के इस पावन पर्व पर हार्दिक शुभकामनाएं!"
+        ];
+
+        function addWish() {
+            const wishText = document.getElementById('wishText').value;
+            if(wishText) {
+                createWishCard(wishText);
+                document.getElementById('wishText').value = '';
+            }
+        }
+
+        function createWishCard(text) {
+            const container = document.getElementById('wishContainer');
+            const div = document.createElement('div');
+            div.className = 'message-box';
+            div.innerHTML = `
+                <p>${text}</p>
+                <div class="share-btns">
+                    <button onclick="shareOnWhatsApp('${text}')">WhatsApp</button>
+                    <button onclick="shareOnFacebook('${text}')">Facebook</button>
+                    <button onclick="copyText('${text}')">Copy</button>
+                </div>
+            `;
+            container.prepend(div);
+        }
+
+        // Sharing functions
+        function shareOnWhatsApp(text) {
+            window.open(`https://wa.me/?text=${encodeURIComponent(text + "\n\nहोली की शुभकामनाएं: https://your-website-url.com")}`);
+        }
+
+        function shareOnFacebook(text) {
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent('https://your-website-url.com')}&quote=${encodeURIComponent(text)}`);
+        }
+
+        function copyText(text) {
+            navigator.clipboard.writeText(text);
+            alert('टेक्स्ट कॉपी हो गया! 🎉');
+        }
+
+        // Initialize with sample wishes
+        window.onload = () => {
+            holiWishes.forEach(wish => createWishCard(wish));
+        }
+    </script>
+</body>
+      </html>
