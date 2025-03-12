@@ -3,46 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>होली उत्सव 2025 | ʀᴀᴊʙʜᴀʀ ꜱᴀʜᴇʙ 🇮🇳</title>
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <title>रंगों की होली | Animated Wishes</title>
+    <!-- Animate.css for text animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <style>
-        /* Base Styles (Previous Code) */
-        /* नया CSS जोड़ें */
-        
-        /* संगीत कंट्रोल */
-        .music-player {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1000;
-            background: white;
-            padding: 10px;
-            border-radius: 50px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        /* वीडियो गैलरी */
-        .video-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
+        body {
+            background: #f0f0f0;
+            font-family: 'Kalam', cursive;
+            overflow-x: hidden;
         }
 
-        .video-item iframe {
-            width: 100%;
-            height: 200px;
-            border-radius: 15px;
+        /* Animated Title */
+        .holi-title {
+            font-family: 'Lobster', cursive;
+            text-align: center;
+            margin: 2rem;
+            font-size: 3.5em;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbow 3s infinite;
         }
 
-        /* 3D गुब्बारे */
+        /* Balloon Animation */
         .balloon {
             position: absolute;
             width: 80px;
             height: 100px;
             animation: float 6s infinite;
             cursor: pointer;
-            transition: transform 0.3s;
+            transition: 0.3s;
         }
 
         @keyframes float {
@@ -50,138 +46,115 @@
             100% { transform: translateY(-100vh) rotate(360deg); }
         }
 
-        /* गेम्स सेक्शन */
-        .game-container {
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            text-align: center;
-        }
-
-        #colorTarget {
+        /* Color Splash Effect */
+        .splash {
+            position: fixed;
             width: 100px;
             height: 100px;
-            background: #ff6b6b;
-            margin: 20px auto;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: transform 0.2s;
+            background: radial-gradient(circle, rgba(255,107,107,0.8) 20%, transparent 60%);
+            pointer-events: none;
+            animation: splash 1s forwards;
         }
 
-        #score {
-            font-size: 24px;
-            color: #4ecdc4;
-            font-weight: bold;
+        @keyframes splash {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(3); opacity: 0; }
+        }
+
+        /* Share Buttons */
+        .share-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .share-btn {
+            background: #25D366;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.3s;
+        }
+
+        .share-btn.instagram {
+            background: #E1306C;
+        }
+
+        .share-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
     </style>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Kalam:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="particles-js"></div>
+    <h1 class="holi-title animate__animated animate__bounceInDown">होली की शुभकामनाएं! 🌈</h1>
 
-    <!-- संगीत प्लेयर -->
-    <div class="music-player">
-        <audio id="holiMusic" loop>
-            <source src="https://cdn.pixabay.com/audio/2022/03/23/audio_7e7a332d98.mp3" type="audio/mpeg">
-        </audio>
-        <button class="btn" onclick="toggleMusic()">🎵 संगीत चालू/बंद</button>
-    </div>
+    <!-- Animated Balloons -->
+    <div id="balloons"></div>
 
-    <div class="container">
-        <!-- पिछला कॉन्टेंट -->
-
-        <!-- वीडियो गैलरी -->
-        <div class="holi-card">
-            <h2>होली वीडियो गैलरी</h2>
-            <div class="video-gallery">
-                <div class="video-item">
-                    <iframe src="https://www.youtube.com/embed/Z3ZAGBL6UBA" frameborder="0" allowfullscreen></iframe>
-                </div>
-                <div class="video-item">
-                    <iframe src="https://www.youtube.com/embed/6JYIGAnVlVc" frameborder="0" allowfullscreen></iframe>
-                </div>
-            </div>
-        </div>
-
-        <!-- 3D गुब्बारे -->
-        <div id="balloonContainer"></div>
-
-        <!-- होली गेम -->
-        <div class="holi-card game-container">
-            <h2>रंग लगाओ गेम 🎯</h2>
-            <p>30 सेकंड में जितने टारगेट मारो!</p>
-            <div id="colorTarget"></div>
-            <p>स्कोर: <span id="score">0</span></p>
-            <button class="btn" onclick="startGame()">खेल शुरू करें</button>
-        </div>
+    <!-- Share Buttons -->
+    <div class="share-container">
+        <a href="#" class="share-btn" onclick="shareOnWhatsApp()">
+            <img src="https://img.icons8.com/color/48/000000/whatsapp.png" width="24"/>
+            WhatsApp
+        </a>
+        <a href="#" class="share-btn instagram" onclick="shareOnInstagram()">
+            <img src="https://img.icons8.com/fluency/48/000000/instagram-new.png" width="24"/>
+            Instagram
+        </a>
     </div>
 
     <script>
-        // नए फंक्शन जोड़ें
-
-        // 1. संगीत कंट्रोल
-        let isMusicPlaying = false;
-        const audio = document.getElementById('holiMusic');
-
-        function toggleMusic() {
-            isMusicPlaying ? audio.pause() : audio.play();
-            isMusicPlaying = !isMusicPlaying;
-        }
-
-        // 2. 3D गुब्बारे जनरेट करें
-        function createBalloons() {
-            const colors = ['#ff6b6b', '#4ecdc4', '#ffe66d', '#ffa502'];
-            const balloonContainer = document.getElementById('balloonContainer');
-            
-            for(let i=0; i<8; i++) {
-                const balloon = document.createElement('img');
-                balloon.className = 'balloon';
-                balloon.src = 'https://www.freeiconspng.com/uploads/balloon-png-33.png';
-                balloon.style.left = Math.random()*90 + 'vw';
-                balloon.style.animationDelay = Math.random()*5 + 's';
-                balloon.style.filter = `hue-rotate(${Math.random()*360}deg)`;
-                balloon.onclick = () => {
-                    balloon.remove();
-                    createColorSplash({clientX: balloon.offsetLeft, clientY: balloon.offsetTop});
-                }
-                balloonContainer.appendChild(balloon);
+        // Balloon Generator
+        function createBalloon() {
+            const colors = ['#ff6b6b', '#4ecdc4', '#ffd700', '#e84393'];
+            const balloon = document.createElement('div');
+            balloon.className = 'balloon';
+            balloon.style.left = Math.random() * 95 + 'vw';
+            balloon.style.background = colors[Math.floor(Math.random()*4)];
+            balloon.innerHTML = '🎈';
+            balloon.onclick = () => {
+                balloon.remove();
+                createSplash(balloon.getBoundingClientRect());
             }
+            document.getElementById('balloons').appendChild(balloon);
         }
 
-        // 3. होली गेम लॉजिक
-        let score = 0;
-        let gameTimer;
-
-        function startGame() {
-            score = 0;
-            document.getElementById('score').textContent = '0';
-            const target = document.getElementById('colorTarget');
-            
-            target.style.animation = 'float 3s infinite';
-            target.onclick = () => {
-                score++;
-                document.getElementById('score').textContent = score;
-                target.style.transform = 'scale(0.9)';
-                setTimeout(() => target.style.transform = 'scale(1)', 100);
-                moveTarget();
-            }
-
-            gameTimer = setTimeout(() => {
-                target.style.animation = '';
-                alert(`खेल समाप्त! आपका स्कोर: ${score}`);
-            }, 30000);
+        // Splash Effect
+        function createSplash(pos) {
+            const splash = document.createElement('div');
+            splash.className = 'splash';
+            splash.style.left = pos.x + 'px';
+            splash.style.top = pos.y + 'px';
+            document.body.appendChild(splash);
+            setTimeout(() => splash.remove(), 1000);
         }
 
-        function moveTarget() {
-            const target = document.getElementById('colorTarget');
-            target.style.left = Math.random()*80 + '%';
-            target.style.top = Math.random()*80 + '%';
+        // Auto Balloons
+        setInterval(createBalloon, 3000);
+
+        // Sharing Functions
+        function shareOnWhatsApp() {
+            const text = encodeURIComponent("होली की रंगीन शुभकामनाएं! 🎨 देखें: https://holi-special.com");
+            window.open(`https://wa.me/?text=${text}`);
         }
 
-        // पेज लोड होने पर
+        function shareOnInstagram() {
+            const url = encodeURIComponent("https://holi-special.com");
+            window.open(`instagram://share?text=Check%20this%20Holi%20greeting:%20${url}`);
+        }
+
+        // Initial Balloons
         window.onload = () => {
-            holiWishes.forEach(createWishCard);
-            createBalloons();
-            setInterval(createBalloons, 10000);
+            for(let i=0; i<5; i++) createBalloon();
         }
     </script>
 </body>
