@@ -1,66 +1,82 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>M3U Stream Player</title>
+    <title>Online M3U Player</title>
     <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet">
     <style>
-        body { 
-            margin: 20px; 
-            background: #f0f0f0; 
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #1a1a1a;
+            color: white;
             font-family: Arial, sans-serif;
         }
         #player-container {
-            max-width: 800px;
+            max-width: 1000px;
             margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .status {
+            text-align: center;
+            padding: 10px;
         }
     </style>
 </head>
 <body>
     <div id="player-container">
-        <h1>M3U Stream Player</h1>
-        <input type="text" id="m3uUrl" placeholder="Enter M3U URL" style="width: 80%; padding: 8px">
-        <button onclick="loadStream()" style="padding: 8px">Play Stream</button>
+        <div class="header">
+            <h1>Online Stream Player</h1>
+        </div>
         
-        <video-js id="player" class="vjs-default-skin" controls preload="auto" width="800" height="450">
-            <p class="vjs-no-js">Enable JavaScript to use this player.</p>
+        <video-js id="player" class="vjs-default-skin" controls preload="auto" 
+                 width="100%" height="500">
+            <p class="vjs-no-js">Please enable JavaScript to use this player.</p>
         </video-js>
+        
+        <div class="status" id="status">Loading player...</div>
     </div>
 
     <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/m3u8-parser@latest"></script>
     <script>
-        let player;
+        // Your M3U URL
+        const M3U_URL = 'https://od.lk/s/OV8yMDkzMzYwMzNf/raw?=m3u';
 
-        function loadStream() {
-            const url = document.getElementById('m3uUrl').value;
-            
-            if(player) {
-                player.dispose();
-            }
-
-            player = videojs('player', {
-                html5: {
-                    hls: {
-                        overrideNative: true
-                    }
+        // Initialize player
+        const player = videojs('player', {
+            html5: {
+                hls: {
+                    overrideNative: true,
+                    debug: true
                 }
-            });
+            },
+            techOrder: ['html5'],
+            autoplay: true
+        });
 
-            player.src({
-                src: url,
-                type: 'application/x-mpegURL'
-            });
+        // Error handling
+        player.on('error', () => {
+            document.getElementById('status').innerHTML = 'Error loading stream. Try refreshing.';
+        });
 
-            player.play();
-        }
-
-        // Preload the user's URL if provided in query params
-        const urlParams = new URLSearchParams(window.location.search);
-        const presetUrl = urlParams.get('url');
-        if(presetUrl) {
-            document.getElementById('m3uUrl').value = presetUrl;
-            loadStream();
-        }
+        // Load the stream
+        player.ready(() => {
+            try {
+                player.src({
+                    src: M3U_URL,
+                    type: 'application/x-mpegURL',
+                    withCredentials: false
+                });
+                document.getElementById('status').innerHTML = 'Stream loaded successfully';
+                player.play();
+            } catch (e) {
+                document.getElementById('status').innerHTML = 'Error initializing player: ' + e.message;
+            }
+        });
     </script>
 </body>
 </html>
